@@ -1,0 +1,16 @@
+---
+# Installs Openshift command line tool
+- include_vars: ../../secrets/openshift.yml
+
+- name: Download Openshift client tools
+  get_url:
+    url: "{{ openshift_cli_url }}"
+    dest: openshift_client.tar.gz
+
+- name: Download and extract Openshift client tools
+  unarchive:
+    src: "{{ openshift_cli_url }}"
+    dest: /usr/local/bin
+
+- name: Login on CLI
+  shell: "oc {{ openshift_url }} --token='{{ openshift_token }}'"
